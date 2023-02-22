@@ -17,7 +17,7 @@ const createWindow = () => {
   win.setVisibleOnAllWorkspaces(true, {
     visibleOnFullScreen: true,
   })
-  win.loadURL("http://localhost:3000/")
+  win.loadURL(process.env.URL || "http://localhost:3000/")
 
   win.on("minimize", function (event) {
     event.preventDefault()
