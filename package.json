@@ -13,6 +13,7 @@
     "start": "electron ."
   },
   "dependencies": {
+    "ejs": "^3.1.8",
     "express": "^4.18.2",
     "peerjs": "^1.4.7",
     "socket.io": "^4.6.1"
