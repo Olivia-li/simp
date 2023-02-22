@@ -4,12 +4,23 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <script>
+      const roomId = "<%= roomId %>"
+    </script>
     <title>Work Together</title>
   </head>
   <body>
-    <input class="p-3 bg-gray-100 rounded" type="text" placeholder="Room ID" />
-    <button class="p-3 bg-blue-500 text-white rounded" onclick="window.location.href='http://www.google.com/'">
-      New
-    </button>
+    <script>
+      function goToRoom(e) {
+        e.preventDefault()
+        const roomId = document.getElementById("joinRoomId").value
+        window.location.href = "/" + roomId
+      }
+    </script>
+    <form onsubmit="goToRoom(event)">
+      <input id="joinRoomId" class="p-3 bg-gray-100 rounded" type="text" placeholder="Room ID" />
+      <button type="submit" class="p-3 bg-blue-500 text-white rounded">Join</button>
+    </form>
+    <button class="p-3 bg-blue-500 text-white rounded" onclick="window.location.href='/<%= roomId %>'">New</button>
   </body>
 </html>
