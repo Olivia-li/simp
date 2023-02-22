@@ -1,6 +1,4 @@
-# Work Together via WebRTC
+# Work Together via WebRTC. A Zoom call that never runs out of minutes.
 ## Setup
 1) `yarn install`
-3) `npm install -g peer`
-3) `peerjs --port 3001`
-4) `yarn start`
+2) `yarn start`
