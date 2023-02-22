@@ -4,6 +4,7 @@ const videoGrid = document.getElementById("video-grid")
 const myPeer = new Peer(undefined, {})
 
 const myVideo = document.createElement("video")
+myVideo.classList.add("rounded-lg")
 myVideo.muted = true
 const peers = {}
 
@@ -18,6 +19,7 @@ navigator.mediaDevices
     myPeer.on("call", (call) => {
       call.answer(stream)
       const video = document.createElement("video")
+      video.classList.add("rounded-lg")
       call.on("stream", (userVideoStream) => {
         addVideoStream(video, userVideoStream)
       })
@@ -39,6 +41,7 @@ myPeer.on("open", (id) => {
 function connectToNewUser(userId, stream) {
   const call = myPeer.call(userId, stream)
   const video = document.createElement("video")
+  video.classList.add("rounded-lg")
   call.on("stream", (userVideoStream) => {
     addVideoStream(video, userVideoStream)
   })
@@ -63,58 +66,53 @@ console.log(audioSelect)
 audioSelect.onchange = getStream
 videoSelect.onchange = getStream
 
-getStream()
-  .then(getDevices)
-  .then(gotDevices)
+getStream().then(getDevices).then(gotDevices)
 
 function getDevices() {
-  return navigator.mediaDevices.enumerateDevices();
+  return navigator.mediaDevices.enumerateDevices()
 }
 
 function gotDevices(deviceInfos) {
-  window.deviceInfos = deviceInfos;
+  window.deviceInfos = deviceInfos
   for (const deviceInfo of deviceInfos) {
-    const option = document.createElement("option");
-    option.value = deviceInfo.deviceId;
+    const option = document.createElement("option")
+    option.value = deviceInfo.deviceId
     if (deviceInfo.kind === "audioinput") {
-      option.text = deviceInfo.label || `Microphone ${audioSelect.length + 1}`;
-      audioSelect.appendChild(option);
+      option.text = deviceInfo.label || `Microphone ${audioSelect.length + 1}`
+      audioSelect.appendChild(option)
     } else if (deviceInfo.kind === "videoinput") {
-      option.text = deviceInfo.label || `Camera ${videoSelect.length + 1}`;
-      videoSelect.appendChild(option);
+      option.text = deviceInfo.label || `Camera ${videoSelect.length + 1}`
+      videoSelect.appendChild(option)
     }
   }
 }
 
 function getStream() {
   if (window.stream) {
-    window.stream.getTracks().forEach(track => {
-      track.stop();
-    });
+    window.stream.getTracks().forEach((track) => {
+      track.stop()
+    })
   }
-  const audioSource = audioSelect.value;
-  const videoSource = videoSelect.value;
+  const audioSource = audioSelect.value
+  const videoSource = videoSelect.value
   const constraints = {
     audio: { deviceId: audioSource ? { exact: audioSource } : undefined },
-    video: { deviceId: videoSource ? { exact: videoSource } : undefined }
-  };
-  return navigator.mediaDevices
-    .getUserMedia(constraints)
-    .then(gotStream)
-    .catch(handleError);
+    video: { deviceId: videoSource ? { exact: videoSource } : undefined },
+  }
+  return navigator.mediaDevices.getUserMedia(constraints).then(gotStream).catch(handleError)
 }
 
 function gotStream(stream) {
-  window.stream = stream;
+  window.stream = stream
   audioSelect.selectedIndex = [...audioSelect.options].findIndex(
-    option => option.text === stream.getAudioTracks()[0].label
-  );
+    (option) => option.text === stream.getAudioTracks()[0].label
+  )
   videoSelect.selectedIndex = [...videoSelect.options].findIndex(
-    option => option.text === stream.getVideoTracks()[0].label
-  );
-  myVideo.srcObject = stream;
+    (option) => option.text === stream.getVideoTracks()[0].label
+  )
+  myVideo.srcObject = stream
 }
 
 function handleError(error) {
-  console.error("Error: ", error);
+  console.error("Error: ", error)
 }

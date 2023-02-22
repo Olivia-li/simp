@@ -23,7 +23,7 @@ const createWindow = () => {
   win.on("minimize", function (event) {
     event.preventDefault()
     win.restore()
-    win.setSize(160, 90)
+    win.setSize(320, 180)
   })
 }
 
