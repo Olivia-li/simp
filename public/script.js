@@ -4,6 +4,8 @@ const videoGrid = document.getElementById("video-grid")
 const myPeer = new Peer(undefined, {})
 
 const myVideo = document.createElement("video")
+myVideo.style.width = "200px"
+myVideo.style.height = "200px"
 myVideo.muted = true
 const peers = {}
 
@@ -26,11 +28,14 @@ navigator.mediaDevices
     socket.on("user-connected", (userId) => {
       connectToNewUser(userId, stream)
     })
+
   })
 
 socket.on("user-disconnected", (userId) => {
   if (peers[userId]) peers[userId].close()
 })
+
+
 
 myPeer.on("open", (id) => {
   socket.emit("join-room", ROOM_ID, id)
@@ -112,7 +117,20 @@ function gotStream(stream) {
   videoSelect.selectedIndex = [...videoSelect.options].findIndex(
     option => option.text === stream.getVideoTracks()[0].label
   );
+  myVideo.remove();
+  addVideoStream(myVideo, stream);
   myVideo.srcObject = stream;
+  // This only works when ur the second person to join lololol
+  for(const [key, value] of Object.entries(peers)) {
+    value.peerConnection.getSenders().forEach(sender => {
+      if (sender.track.kind === "video" && stream.getVideoTracks().length > 0) {
+        sender.replaceTrack(stream.getVideoTracks()[0]);
+      };
+      if (sender.track.kind === "audio" && stream.getAudioTracks().length > 0) {
+        sender.replaceTrack(stream.getAudioTracks()[0]);
+      };
+    })
+  }
 }
 
 function handleError(error) {
