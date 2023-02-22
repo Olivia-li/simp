@@ -9,6 +9,7 @@ const createWindow = () => {
     },
     minimizable: false,
     visibleOnFullScreen: true,
+    titleBarStyle: "hidden",
     alwaysOnTop: true,
   })
   app.dock.hide()
