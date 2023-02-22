@@ -12,6 +12,7 @@ const createWindow = () => {
     titleBarStyle: "hidden",
     alwaysOnTop: true,
   })
+
   app.dock.hide()
   win.setAlwaysOnTop(true, "screen-saver", 1)
   win.setVisibleOnAllWorkspaces(true, {
@@ -21,8 +22,8 @@ const createWindow = () => {
 
   win.on("minimize", function (event) {
     event.preventDefault()
-    win.width = 50
-    win.height = 50
+    win.restore()
+    win.setSize(320, 180)
   })
 }
 

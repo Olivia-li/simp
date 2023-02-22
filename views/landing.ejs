@@ -3,14 +3,27 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" type="text/css" href="styles.css"/>
+    <link rel="stylesheet" type="text/css" href="styles.css" />
+    <link rel="stylesheet" type="text/css" href="output.css" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <script>
       const roomId = "<%= roomId %>"
     </script>
     <title>Work Together</title>
   </head>
-  <body>
+  <body class="w-screen h-screen">
+    <div class="toolbar h-8 w-full bg-gray-300"></div>
+    <div class="w-full h-full flex justify-center">
+      <div class="my-auto flex flex-col items-center justify-center">
+        <button class="m-3 p-3 bg-blue-500 text-white rounded" onclick="window.location.href='/<%= roomId %>'">
+          Create new room
+        </button>
+        <form onsubmit="goToRoom(event)">
+          <input id="joinRoomId" class="p-3 bg-gray-100 rounded" type="text" placeholder="Room ID" />
+          <button type="submit" class="px-5 py-3 bg-blue-500 text-white rounded">Join</button>
+        </form>
+      </div>
+    </div>
     <script>
       function goToRoom(e) {
         e.preventDefault()
@@ -18,10 +31,5 @@
         window.location.href = "/" + roomId
       }
     </script>
-    <form onsubmit="goToRoom(event)">
-      <input id="joinRoomId" class="p-3 bg-gray-100 rounded" type="text" placeholder="Room ID" />
-      <button type="submit" class="p-3 bg-blue-500 text-white rounded">Join</button>
-    </form>
-    <button class="p-3 bg-blue-500 text-white rounded" onclick="window.location.href='/<%= roomId %>'">New</button>
   </body>
 </html>
