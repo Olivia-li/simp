@@ -7,7 +7,7 @@ const createWindow = () => {
       nodeIntegration: true,
       contextIsolation: false,
     },
-    minimizable: false,
+    minimizable: true,
     visibleOnFullScreen: true,
     titleBarStyle: "hidden",
     alwaysOnTop: true,
@@ -18,6 +18,12 @@ const createWindow = () => {
     visibleOnFullScreen: true,
   })
   win.loadURL("http://localhost:3000/")
+
+  win.on("minimize", function (event) {
+    event.preventDefault()
+    win.width = 50
+    win.height = 50
+  })
 }
 
 app.whenReady().then(() => {
