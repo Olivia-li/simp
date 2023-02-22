@@ -10,10 +10,10 @@
     <script defer src="https://unpkg.com/peerjs@1.2.0/dist/peerjs.min.js"></script>
     <script src="/socket.io/socket.io.js" defer></script>
     <script src="script.js" defer></script>
-    <script src="https://cdn.tailwindcss.com"></script>
     <title>Work Together</title>
   </head>
   <body>
     <div id="video-grid"></div>
+    <button onClick="navigator.clipboard.writeText(ROOM_ID)">Copy Room ID</button>
   </body>
 </html>
