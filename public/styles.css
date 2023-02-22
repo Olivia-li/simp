@@ -5,3 +5,8 @@
 .toolbar {
   -webkit-app-region: drag;
 }
+
+video {
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
+}
