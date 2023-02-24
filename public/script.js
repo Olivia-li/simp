@@ -5,6 +5,7 @@ const videoGrid = document.getElementById("video-grid")
 const myPeer = new Peer(undefined, {})
 
 const myVideo = document.createElement("video")
+myVideo.classList.add("rounded-lg", "object-cover", "object-center", "flex-grow", "m-2", "bg-blue-300")
 myVideo.style.maxWidth = "1000px"
 myVideo.style.maxHeight = "1000px"
 myVideo.muted = true
@@ -71,6 +72,8 @@ function addVideoStream(video, stream) {
   video.addEventListener("loadedmetadata", () => {
     video.play()
   })
+
+  video.muted = true
 
   // const videoContainer = document.createElement("div")
   // videoContainer.classList.add("video-container")

@@ -18,7 +18,7 @@ const createWindow = () => {
   win.setVisibleOnAllWorkspaces(true, {
     visibleOnFullScreen: true,
   })
-  win.loadURL(process.env.URL || "https://work-together.ngrok.io")
+  win.loadURL(process.env.URL || "localhost:3030/")
 
   win.on("minimize", function (event) {
     event.preventDefault()
