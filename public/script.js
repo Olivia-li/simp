@@ -19,6 +19,7 @@ navigator.mediaDevices
 
     myPeer.on("call", (call) => {
       call.answer(stream)
+      peers[call.peer] = call
       const video = document.createElement("video")
       video.classList.add("rounded-lg")
       call.on("stream", (userVideoStream) => {
