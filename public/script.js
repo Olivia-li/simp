@@ -18,7 +18,7 @@ navigator.mediaDevices
     addVideoStream(myVideo, stream)
 
     myPeer.on("call", (call) => {
-      call.answer(stream)
+      call.answer(window.stream)
       peers[call.peer] = call
       const video = document.createElement("video")
       video.classList.add("rounded-lg")
@@ -118,7 +118,6 @@ function gotStream(stream) {
   videoSelect.selectedIndex = [...videoSelect.options].findIndex(
     option => option.text === stream.getVideoTracks()[0].label
   );
-  myVideo.remove();
   addVideoStream(myVideo, stream);
   myVideo.srcObject = stream;
   // This only works when ur the second person to join lololol
