@@ -13,7 +13,7 @@
   },
   "scripts": {
     "start": "electron .",
-    "dev": "nodemon server"
+    "dev": "nodemon server & npx tailwindcss -i ./public/styles.css -o ./public/output.css --watch"
   },
   "dependencies": {
     "ejs": "^3.1.8",
