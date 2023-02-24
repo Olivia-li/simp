@@ -8,7 +8,6 @@ const myVideo = document.createElement("video")
 myVideo.classList.add("rounded-lg", "object-cover", "only:block", "hidden", "sm:block", "sm:m-2", "bg-blue-300", "h-screen", "w-screen")
 myVideo.style.maxWidth = "1000px"
 myVideo.style.maxHeight = "1000px"
-myVideo.muted = true
 
 const peers = {}
 
@@ -74,7 +73,6 @@ function addVideoStream(video, stream) {
   })
   debouncedRecalculateLayout()
 
-  video.muted = true
 
   // const videoContainer = document.createElement("div")
   // videoContainer.classList.add("video-container")
