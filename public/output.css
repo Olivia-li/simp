@@ -766,6 +766,10 @@ video {
   display: none;
 }
 
+.aspect-video {
+  aspect-ratio: 16 / 9;
+}
+
 .h-8 {
   height: 2rem;
 }
@@ -778,6 +782,10 @@ video {
   height: 100vh;
 }
 
+.max-h-\[1000px\] {
+  max-height: 1000px;
+}
+
 .w-full {
   width: 100%;
 }
@@ -786,8 +794,8 @@ video {
   width: 100vw;
 }
 
-.max-w-full {
-  max-width: 100%;
+.max-w-\[1000px\] {
+  max-width: 1000px;
 }
 
 .flex-shrink {
@@ -2286,6 +2294,10 @@ video {
 }
 
 .toolbar {
+  -webkit-app-region: drag;
+}
+
+body{
   -webkit-app-region: drag;
 }
 

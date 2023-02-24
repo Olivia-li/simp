@@ -6,6 +6,10 @@
   -webkit-app-region: drag;
 }
 
+body{
+  -webkit-app-region: drag;
+}
+
 video {
   -webkit-transform: scaleX(-1);
   transform: scaleX(-1);
