@@ -5,7 +5,6 @@ const videoGrid = document.getElementById("video-grid")
 const myPeer = new Peer(undefined, {})
 
 const myVideo = document.createElement("video")
-// myVideo.classList.add("rounded-lg", "object-cover", "object-center", "m-2", "w-full", "h-full")
 myVideo.style.maxWidth = "1000px"
 myVideo.style.maxHeight = "1000px"
 myVideo.muted = true
@@ -47,18 +46,9 @@ myPeer.on("open", (id) => {
 
 function createNewVideo() {
   const video = document.createElement("video")
-  // video.classList.add(
-  //   "rounded-lg",
-  //   "object-cover",
-  //   "object-center",
-  //   "flex-grow",
-  //   "m-2",
-  //   "bg-blue-300",
-  //   "max-w-full"
-  // )
+  video.classList.add("rounded-lg", "object-cover", "object-center", "flex-grow", "m-2", "bg-blue-300")
   video.style.maxWidth = "1000px"
   video.style.maxHeight = "1000px"
-  video.muted = true
   return video
 }
 
