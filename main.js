@@ -1,4 +1,4 @@
-require("./server.js")
+// require("./server.js")
 const { app, BrowserWindow } = require("electron")
 
 const createWindow = () => {
