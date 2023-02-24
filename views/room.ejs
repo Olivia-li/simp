@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" type="text/css" href="styles.css" />
     <link rel="stylesheet" type="text/css" href="output.css" />
+    <script src="https://kit.fontawesome.com/dca18e0352.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.15/lodash.min.js"></script>
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <script>
       const ROOM_ID = "<%= roomId %>"
@@ -12,12 +14,13 @@
     <script defer src="https://unpkg.com/peerjs@1.2.0/dist/peerjs.min.js"></script>
     <script src="/socket.io/socket.io.js" defer></script>
     <script src="script.js" defer></script>
+    <script src="helpers.js" defer></script>
     <title>Work Together</title>
   </head>
   <body>
     <div class="toolbar h-8 w-full bg-gray-300 hidden sm:block"></div>
-    <div class="sm:p-5 space-y-3">
-      <div id="video-grid" class="flex"></div>
+    <div class="">
+      <div id="video-grid" class="flex flex-wrap justify-center"></div>
       <div class="space-y-3 hidden sm:block">
         <button class="p-3 bg-blue-500 text-white rounded" onClick="navigator.clipboard.writeText(ROOM_ID)">
           Copy Room ID

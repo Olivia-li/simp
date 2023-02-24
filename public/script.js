@@ -1,12 +1,15 @@
 const socket = io("/")
+
 const videoGrid = document.getElementById("video-grid")
 
 const myPeer = new Peer(undefined, {})
 
 const myVideo = document.createElement("video")
-myVideo.style.width = "200px"
-myVideo.style.height = "200px"
+// myVideo.classList.add("rounded-lg", "object-cover", "object-center", "m-2", "w-full", "h-full")
+myVideo.style.maxWidth = "1000px"
+myVideo.style.maxHeight = "1000px"
 myVideo.muted = true
+
 const peers = {}
 
 navigator.mediaDevices
@@ -20,8 +23,7 @@ navigator.mediaDevices
     myPeer.on("call", (call) => {
       call.answer(window.stream)
       peers[call.peer] = call
-      const video = document.createElement("video")
-      video.classList.add("rounded-lg")
+      const video = createNewVideo()
       call.on("stream", (userVideoStream) => {
         addVideoStream(video, userVideoStream)
       })
@@ -30,7 +32,9 @@ navigator.mediaDevices
     socket.on("user-connected", (userId) => {
       connectToNewUser(userId, stream)
     })
-
+  })
+  .catch((err) => {
+    console.log(err)
   })
   .catch((err) => {
     console.log(err)
@@ -40,16 +44,30 @@ socket.on("user-disconnected", (userId) => {
   if (peers[userId]) peers[userId].close()
 })
 
-
-
 myPeer.on("open", (id) => {
   socket.emit("join-room", ROOM_ID, id)
 })
 
+function createNewVideo() {
+  const video = document.createElement("video")
+  // video.classList.add(
+  //   "rounded-lg",
+  //   "object-cover",
+  //   "object-center",
+  //   "flex-grow",
+  //   "m-2",
+  //   "bg-blue-300",
+  //   "max-w-full"
+  // )
+  video.style.maxWidth = "1000px"
+  video.style.maxHeight = "1000px"
+  video.muted = true
+  return video
+}
+
 function connectToNewUser(userId, stream) {
   const call = myPeer.call(userId, stream)
-  const video = document.createElement("video")
-  video.classList.add("rounded-lg")
+  const video = createNewVideo()
   call.on("stream", (userVideoStream) => {
     addVideoStream(video, userVideoStream)
   })
@@ -65,6 +83,11 @@ function addVideoStream(video, stream) {
   video.addEventListener("loadedmetadata", () => {
     video.play()
   })
+
+  // const videoContainer = document.createElement("div")
+  // videoContainer.classList.add("video-container")
+  // videoContainer.append(video)
+
   videoGrid.append(video)
 }
 
@@ -116,19 +139,20 @@ function gotStream(stream) {
     (option) => option.text === stream.getAudioTracks()[0].label
   )
   videoSelect.selectedIndex = [...videoSelect.options].findIndex(
-    option => option.text === stream.getVideoTracks()[0].label
-  );
-  addVideoStream(myVideo, stream);
-  myVideo.srcObject = stream;
+    (option) => option.text === stream.getVideoTracks()[0].label
+  )
+
+  addVideoStream(myVideo, stream)
+  
   // This only works when ur the second person to join lololol
-  for(const [key, value] of Object.entries(peers)) {
-    value.peerConnection.getSenders().forEach(sender => {
+  for (const [key, value] of Object.entries(peers)) {
+    value.peerConnection.getSenders().forEach((sender) => {
       if (sender.track.kind === "video" && stream.getVideoTracks().length > 0) {
-        sender.replaceTrack(stream.getVideoTracks()[0]);
-      };
+        sender.replaceTrack(stream.getVideoTracks()[0])
+      }
       if (sender.track.kind === "audio" && stream.getAudioTracks().length > 0) {
-        sender.replaceTrack(stream.getAudioTracks()[0]);
-      };
+        sender.replaceTrack(stream.getAudioTracks()[0])
+      }
     })
   }
 }
@@ -136,3 +160,57 @@ function gotStream(stream) {
 function handleError(error) {
   console.error("Error: ", error)
 }
+
+function recalculateLayout() {
+  const gallery = document.getElementById("video-grid")
+  const screenWidth = document.body.getBoundingClientRect().width
+  const screenHeight = document.body.getBoundingClientRect().height
+  const videoCount = document.getElementsByTagName("video").length
+
+  function calculateLayout(containerWidth, containerHeight, videoCount, aspectRatio) {
+    let bestLayout = {
+      area: 0,
+      cols: 0,
+      rows: 0,
+      width: 0,
+      height: 0,
+    }
+
+    // brute-force search layout where video occupy the largest area of the container
+    for (let cols = 1; cols <= videoCount; cols++) {
+      const rows = Math.ceil(videoCount / cols)
+      const hScale = containerWidth / (cols * aspectRatio)
+      const vScale = containerHeight / rows
+      let width
+      let height
+      if (hScale <= vScale) {
+        width = Math.floor(containerWidth / cols)
+        height = Math.floor(width / aspectRatio)
+      } else {
+        height = Math.floor(containerHeight / rows)
+        width = Math.floor(height * aspectRatio)
+      }
+      const area = width * height
+      if (area > bestLayout.area) {
+        bestLayout = {
+          area,
+          width,
+          height,
+          rows,
+          cols,
+        }
+      }
+    }
+    return bestLayout
+  }
+
+  const { width, height, cols } = calculateLayout(screenWidth, screenHeight, videoCount, 16 / 9)
+
+  gallery.style.setProperty("--width", width + "px")
+  gallery.style.setProperty("--height", height + "px")
+  gallery.style.setProperty("--cols", cols + "")
+}
+
+const debouncedRecalculateLayout = _.debounce(recalculateLayout, 50)
+window.addEventListener("resize", debouncedRecalculateLayout)
+debouncedRecalculateLayout()

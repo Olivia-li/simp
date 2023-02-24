@@ -10,3 +10,13 @@ video {
   -webkit-transform: scaleX(-1);
   transform: scaleX(-1);
 }
+
+.video-grid {
+  max-width: calc(var(--width) * var(--cols));
+}
+
+.video-container {
+  width: var(--width);
+  height: var(--height);
+  background-color: #3a3a3e;
+}
