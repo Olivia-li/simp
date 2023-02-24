@@ -21,7 +21,7 @@ navigator.mediaDevices
     addVideoStream(myVideo, stream)
 
     myPeer.on("call", (call) => {
-      call.answer(window.stream)
+      call.answer(stream)
       peers[call.peer] = call
       const video = createNewVideo()
       call.on("stream", (userVideoStream) => {
@@ -30,7 +30,7 @@ navigator.mediaDevices
     })
 
     socket.on("user-connected", (userId) => {
-      connectToNewUser(userId, stream)
+      connectToNewUser(userId, window.stream)
     })
   })
   .catch((err) => {
@@ -80,6 +80,7 @@ function connectToNewUser(userId, stream) {
 
 function addVideoStream(video, stream) {
   video.srcObject = stream
+  video.classList.add(stream.id)
   video.addEventListener("loadedmetadata", () => {
     video.play()
   })
@@ -93,7 +94,6 @@ function addVideoStream(video, stream) {
 
 const audioSelect = document.getElementById("audioSourceSelect")
 const videoSelect = document.getElementById("videoSourceSelect")
-console.log(audioSelect)
 audioSelect.onchange = getStream
 videoSelect.onchange = getStream
 
@@ -143,7 +143,6 @@ function gotStream(stream) {
   )
 
   addVideoStream(myVideo, stream)
-  
   // This only works when ur the second person to join lololol
   for (const [key, value] of Object.entries(peers)) {
     value.peerConnection.getSenders().forEach((sender) => {
