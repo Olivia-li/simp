@@ -6,8 +6,10 @@
   -webkit-app-region: drag;
 }
 
-body{
-  -webkit-app-region: drag;
+@media only screen and (max-width: 320px) {
+  body {
+    -webkit-app-region: drag;
+  }
 }
 
 video {
