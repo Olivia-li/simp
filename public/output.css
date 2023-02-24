@@ -794,10 +794,6 @@ video {
   width: 100vw;
 }
 
-.max-w-full {
-  max-width: 100%;
-}
-
 .max-w-\[1000px\] {
   max-width: 1000px;
 }
@@ -2298,6 +2294,10 @@ video {
 }
 
 .toolbar {
+  -webkit-app-region: drag;
+}
+
+body{
   -webkit-app-region: drag;
 }
 

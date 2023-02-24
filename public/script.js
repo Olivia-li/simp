@@ -173,7 +173,9 @@ function recalculateLayout() {
   const screenHeight = document.body.getBoundingClientRect().height
   const videoCount = document.getElementsByTagName("video").length
 
-  function calculateLayout(containerWidth, containerHeight, videoCount, aspectRatio) {
+  function calculateLayout(containerWidth, containerHeight, videoCount) {
+    const aspectRatio = 16 / 9
+
     let bestLayout = {
       area: 0,
       cols: 0,
@@ -210,13 +212,13 @@ function recalculateLayout() {
     return bestLayout
   }
 
-  const { width, height, cols } = calculateLayout(screenWidth, screenHeight, videoCount, 16 / 9)
+  const { width, height, cols } = calculateLayout(screenWidth, screenHeight, videoCount)
 
   gallery.style.setProperty("--width", width + "px")
   gallery.style.setProperty("--height", height + "px")
   gallery.style.setProperty("--cols", cols + "")
 }
 
-const debouncedRecalculateLayout = _.debounce(recalculateLayout, 50)
+const debouncedRecalculateLayout = _.debounce(recalculateLayout, 30)
 window.addEventListener("resize", debouncedRecalculateLayout)
 debouncedRecalculateLayout()
