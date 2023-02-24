@@ -5,7 +5,7 @@ const videoGrid = document.getElementById("video-grid")
 const myPeer = new Peer(undefined, {})
 
 const myVideo = document.createElement("video")
-myVideo.classList.add("rounded-lg", "object-cover", "hidden", "sm:block", "sm:m-2", "bg-blue-300", "h-screen", "w-screen")
+myVideo.classList.add("rounded-lg", "object-cover", "only:block", "hidden", "sm:block", "sm:m-2", "bg-blue-300", "h-screen", "w-screen")
 myVideo.style.maxWidth = "1000px"
 myVideo.style.maxHeight = "1000px"
 myVideo.muted = true
